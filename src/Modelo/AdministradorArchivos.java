@@ -7,8 +7,10 @@ import java.io.IOException;
 
 public class AdministradorArchivos 
 {
+    
     FileReader fr;
     BufferedReader br;
+    
     public AdministradorArchivos() throws FileNotFoundException, IOException
     {
         fr = new FileReader("Diccionario.txt");

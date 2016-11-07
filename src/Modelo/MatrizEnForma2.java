@@ -4,7 +4,7 @@ public class MatrizEnForma2
 {
     private NodoDoble mat;
     
-    public MatrizEnForma2(int m, int n/*Tripleta t*/)
+    public MatrizEnForma2(int m, int n)
     {
         Tripleta t = new Tripleta(m,n,0);
         mat = new NodoDoble(t);

@@ -29,22 +29,19 @@ public class Controlador
             while(!diccionario.finDeRecorrido(q))
                 {
                     Hilera tq = (Hilera)q.retornaDato();
-                    /*if(tp.longitud()==tq.longitud())
-                    {*/
-                        System.out.println("TP: ");
-                        tp.recorreIzqDer();
-                        System.out.println("TQ: ");
-                        tq.recorreIzqDer();
-                        System.out.println("POS P: "+posP);                        
-                        System.out.println("POS Q: "+posQ);
-                        if(tp.cantidadLetrasDiferentes(tq) == 1)
-                        {
-                            Tripleta t = new Tripleta(posP, posQ, 1);
-                            NodoDoble x = new NodoDoble(t);
-                            matrizAdyGrafo.conectaPorFilas(x);
-                            matrizAdyGrafo.conectaPorColumnas(x);
-                        }
-                    /*}*/
+                    System.out.println("TP: ");
+                    tp.recorreIzqDer();
+                    System.out.println("TQ: ");
+                    tq.recorreIzqDer();
+                    System.out.println("POS P: "+posP);                        
+                    System.out.println("POS Q: "+posQ);
+                    if(tp.cantidadLetrasDiferentes(tq) == 1)
+                    {
+                        Tripleta t = new Tripleta(posP, posQ, 1);
+                        NodoDoble x = new NodoDoble(t);
+                        matrizAdyGrafo.conectaPorFilas(x);                   
+                        matrizAdyGrafo.conectaPorColumnas(x);
+                    }
                     q = q.retornaLd();
                     posQ = posQ + 1;
                 }

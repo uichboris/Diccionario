@@ -1,8 +1,5 @@
 package Modelo;
-/**
- *
- * @author marioh.ramirez
- */
+
 public class Hilera extends ListaDoblementeLigada 
 {      
     public Hilera(){}//Constructor de la clase Hilera
