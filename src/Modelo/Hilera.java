@@ -74,13 +74,21 @@ public class Hilera extends ListaDoblementeLigada
             }
             else
             {
-                if(p.retornaDato()!=q.retornaDato())
+                if(q == null && p.retornaDato()!=null)
                 {
-                    n = n+1;
+                    n=n+1;
+                    p = p.retornaLd();
                 }
-                p = p.retornaLd();
-                q = q.retornaLd();
-            }            
+                else
+                {
+                    if(p.retornaDato()!=q.retornaDato())
+                    {
+                        n = n+1;
+                    }
+                    p = p.retornaLd();
+                    q = q.retornaLd();
+                }  
+            }
         }
         return n;
     }
