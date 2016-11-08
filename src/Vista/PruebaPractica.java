@@ -13,6 +13,12 @@ public class PruebaPractica
         c.getMatrizAdyGrafo().muestraMatrizPorColumnas();
         c.getMatrizAdyGrafo().muestraMatrizPorFilas();
         c.recorrerDiccionario();
+        c.recorreCierreTransitivo();  
+        c.recorreCostos();
+        c.crearCostosMinimos();
+        c.recorreCostosMinimos();
+        c.recorreRutas();
+        c.proceseRutas();
     }
     
 }

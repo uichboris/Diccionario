@@ -31,15 +31,8 @@ public class AdministradorArchivos
             palabra.construirHilera(cadena.toLowerCase());
             diccionario.insertar(palabra, p);
             p = p.retornaLd();
-            palabra.recorreIzqDer();
         }
         p = diccionario.primerNodo();
-        while(!diccionario.finDeRecorrido(p))
-        {
-            palabra = (Hilera)p.retornaDato();
-            palabra.recorreIzqDer();
-            p = p.retornaLd();
-        }
         return diccionario;        
     }
 }

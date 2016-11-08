@@ -32,6 +32,7 @@ public class MatrizEnForma2
     
     public void muestraMatrizPorFilas()
     {
+        System.out.println("Matriz por filas: ");
         int f, c;
         Object v;
         NodoDoble q = nodoCabeza().retornaLd();
@@ -49,6 +50,7 @@ public class MatrizEnForma2
     
     public void muestraMatrizPorColumnas()
     {
+        System.out.println("Matriz por columnas: ");
         int f, c;
         Object v;
         NodoDoble q = nodoCabeza().retornaLi();
@@ -112,5 +114,25 @@ public class MatrizEnForma2
         x.asignaLi(q);
         Tripleta tmat = (Tripleta)mat.retornaDato();
         tmat.asignaValor((int)tmat.retornaValor()+1);
-    }    
+    }   
+    
+    public NodoDoble retonarNodoEn(int f, int c)
+    {
+        NodoDoble p;
+        Tripleta t;
+        p = primerNodo();
+        while(p!=nodoCabeza())
+        {
+            t = (Tripleta)p.retornaDato();
+            if(t.retornaFila()==f && t.retornaColumna()==c)
+            {
+                return p;
+            }
+            else
+            {
+                p = p.retornaLd();
+            }
+        }
+        return p;
+    }
 }
