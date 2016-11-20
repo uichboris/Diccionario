@@ -9,12 +9,15 @@ import java.awt.Graphics;
 import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +34,10 @@ public class VentanaGrafo extends JFrame
     Color colorFondo;
     JPanel panelEste;
     JPanel panelPrincipal = new JPanel(new BorderLayout());
+    private JFileChooser select= new JFileChooser();
+    private String contenido="";
+    private FileInputStream entrada;
+    private File archivo;
     
     public VentanaGrafo() throws IOException
     {
@@ -246,6 +253,33 @@ public class VentanaGrafo extends JFrame
                 BorderFactory.createEmptyBorder(5,5,5,5),
               BorderFactory.createTitledBorder("Opciones")));
         return panelOpciones;
+    }
+    
+    private void cargarActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        
+            // TODO add your handling code here:
+        if(select.showDialog(this,"Abrir archivo")==JFileChooser.APPROVE_OPTION){
+            archivo=select.getSelectedFile();
+            if (archivo.canRead()) {
+                if (archivo.getName().endsWith("txt")) {
+                    
+                    try {
+                        entrada=new FileInputStream(archivo);
+                        int ascci;
+                        while ((ascci=entrada.read())!=-1) {
+                            char caracter=(char)ascci;
+                            contenido +=caracter;
+                        }
+                    } catch (Exception e) {
+                    }
+                    
+//                    palabras.setText(contenido);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Seleccione un archivo de texto");
+                }
+            }
+            
+        }
     }
         
 }
