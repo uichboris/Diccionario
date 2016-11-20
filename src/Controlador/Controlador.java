@@ -297,16 +297,22 @@ public class Controlador
         this.matrizAdyGrafo = matrizAdyGrafo;
     }
     
-//    public String palabras(){
-//       String palabras="";
-//       ListaDoblementeLigada dic= getDiccionario();
-//        while (!dic.ultimoNodo()) {
-//            palabra +=dic.getpalabra;
-//            dic.next;
-//        }
-//        
-//        
-//        return palabras;
-//    }
+    public String palabras(){
+       String palabras="";
+       ListaDoblementeLigada dic= getDiccionario();
+        NodoDoble p;
+        p = diccionario.primerNodo();
+        
+        while(!diccionario.finDeRecorrido(p))
+        {
+            Hilera palabra = (Hilera)p.retornaDato();
+            palabras += palabra.devuelvePalabraString();
+            palabras += "\n";
+            p = p.retornaLd();
+        }  
+        
+        
+        return palabras;
+    }
     
 }

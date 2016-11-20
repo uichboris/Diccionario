@@ -5,8 +5,12 @@
  */
 package Vista;
 
+import Controlador.Controlador;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 /**
  *
@@ -151,29 +155,39 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarActionPerformed
-        // TODO add your handling code here:
-        if(select.showDialog(this,"Abrir archivo")==JFileChooser.APPROVE_OPTION){
-            archivo=select.getSelectedFile();
-            if (archivo.canRead()) {
-                if (archivo.getName().endsWith("txt")) {
-                    
-                    try {
-                        entrada=new FileInputStream(archivo);
-                        int ascci;
-                        while ((ascci=entrada.read())!=-1) {
-                            char caracter=(char)ascci;
-                            contenido +=caracter;
-                        }
-                    } catch (Exception e) {
-                    }
-                    
-                    palabras.setText(contenido);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Seleccione un archivo de texto");
-                }
-            }
-            
+        
+            // TODO add your handling code here:
+//        if(select.showDialog(this,"Abrir archivo")==JFileChooser.APPROVE_OPTION){
+//            archivo=select.getSelectedFile();
+//            if (archivo.canRead()) {
+//                if (archivo.getName().endsWith("txt")) {
+//                    
+//                    try {
+//                        entrada=new FileInputStream(archivo);
+//                        int ascci;
+//                        while ((ascci=entrada.read())!=-1) {
+//                            char caracter=(char)ascci;
+//                            contenido +=caracter;
+//                        }
+//                    } catch (Exception e) {
+//                    }
+//                    
+//                    palabras.setText(contenido);
+//                }else{
+//                    JOptionPane.showMessageDialog(null, "Seleccione un archivo de texto");
+//                }
+//            }
+//            
+//        }
+        try {
+        Controlador listaPalabras=new Controlador();
+         contenido= listaPalabras.palabras();
+         palabras.setText(contenido);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+            
     }//GEN-LAST:event_seleccionarActionPerformed
 
     private void caminoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caminoActionPerformed
