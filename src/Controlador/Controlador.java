@@ -16,6 +16,20 @@ public class Controlador
         diccionario = admArch.leerArchivo();
     }
     
+    public String retornaPalabra(int posicion)
+    {
+        Hilera palabra = new Hilera();
+        NodoDoble p = diccionario.primerNodo();
+        int i = 1;
+        while(!diccionario.finDeRecorrido(p) && i<=posicion)
+        {
+            palabra = (Hilera)p.retornaDato();
+            p = p.retornaLd();
+            i = i+1;
+        }
+        return palabra.devuelvePalabraString();
+    }   
+    
     public void crearMatriz()
     {
         int n = diccionario.longitudLista();

@@ -59,6 +59,23 @@ public class Hilera extends ListaDoblementeLigada
         return null;        
     }
     
+    public String devuelvePalabraString()
+    {
+        String palabra;
+        char letra;
+        NodoDoble p = primerNodo();
+        letra = (char)p.retornaDato();
+        palabra = Character.toString(letra);
+        p = p.retornaLd();
+        while(!finDeRecorrido(p))
+        {
+            letra = (char)p.retornaDato();
+            palabra = palabra+Character.toString(letra);
+            p = p.retornaLd();
+        }
+        return palabra;
+    }
+    
     public int cantidadLetrasDiferentes(Hilera b)
     {
         NodoDoble p, q;
