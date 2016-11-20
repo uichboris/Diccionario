@@ -1,24 +1,25 @@
 package Modelo;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class AdministradorArchivos 
 {
-    
-    FileReader fr;
-    BufferedReader br;
+    private FileReader fr;
+    private BufferedReader br;
     
     public AdministradorArchivos() throws FileNotFoundException, IOException
     {
-        fr = new FileReader("Diccionario.txt");
-        br = new BufferedReader(fr);
+        
     }
     
-    public ListaDoblementeLigada leerArchivo() throws IOException
+    public ListaDoblementeLigada leerArchivo(File archivo) throws IOException
     {
+        fr = new FileReader(archivo);
+        br = new BufferedReader(fr);
         String cadena = br.readLine();
         ListaDoblementeLigada diccionario = new ListaDoblementeLigada();
         Hilera palabra = new Hilera();

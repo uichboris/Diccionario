@@ -6,34 +6,29 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
 
-public class VentanaGrafo extends JFrame
+public class VentanaGrafo extends JFrame implements ActionListener
 {
     Controlador controlador;
     PanelGrafo panelGrafo;
-    Color colorFondo;
+    JPanel panelSur;
     JPanel panelEste;
+    JButton cargar;
+    JButton mostrar;
+    JComboBox listaPalabras;
+    JComboBox listaPalabras2;
     JPanel panelPrincipal = new JPanel(new BorderLayout());
+    boolean leido;
     private JFileChooser select= new JFileChooser();
     private String contenido="";
     private FileInputStream entrada;
@@ -41,21 +36,21 @@ public class VentanaGrafo extends JFrame
     
     public VentanaGrafo() throws IOException
     {
-        super("Grafo");
+        super("Grafos 1.0");
+        leido = false;
         controlador = new Controlador();
         panelGrafo = new PanelGrafo(); 
-        //panelPrincipal.add(panelGrafo,BorderLayout.CENTER);
         JScrollPane scrollPane = new  JScrollPane(panelGrafo);
-        panelPrincipal.add(scrollPane);
-        colorFondo = Color.BLUE;       
-        panelPrincipal.setBackground(colorFondo);
+        panelPrincipal.add(scrollPane);      
+        panelPrincipal.setBackground(Color.LIGHT_GRAY);        
         crearPanelEste();
-        pack();         
-        controlador.crearMatriz();
+        crearPanelSur();
+        pack();        
+//        controlador.crearMatriz();
         setContentPane(panelPrincipal);  
         panelGrafo.repaint();
         Dimension tamaño = getSize();
-        tamaño.height = 740;
+        tamaño.height = 700;
         tamaño.width = 1200;
         setSize(tamaño);
         addWindowListener(new WindowAdapter()
@@ -128,17 +123,21 @@ public class VentanaGrafo extends JFrame
 
         public PanelGrafo()
         {
-            //setPreferredSize(new Dimension(450,495));            
+            this.setBackground(Color.WHITE);
         }
         
         @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(3000, 3000);
-    }
+        public Dimension getPreferredSize() 
+        {
+            return new Dimension(10000, 10000);
+        }
         
         @Override        
         public void paintComponent(Graphics g)
         {
+            if(leido==true)
+            {
+                controlador.crearMatriz();
             super.paintComponent(g);
             int i;
             int n = 50;
@@ -161,17 +160,6 @@ public class VentanaGrafo extends JFrame
                 ultimaPosicionY = n2;
                 if(matrizPosiciones[i-1][0]==0)
                 {
-                    if(n2>740)
-                    {
-                        n2 = 50;
-                    }
-                    else
-                    {
-                        if(n1>1200)
-                        {
-                            n1 = 50;
-                        }
-                    }
                     g.setColor(Color.red);
                     g.fillRect(n1, n2, 10, 10);
                     g.setColor(Color.BLACK);
@@ -218,69 +206,94 @@ public class VentanaGrafo extends JFrame
                 i = i+1;
             }while(i<=controlador.getDiccionario().longitudLista());
         }
+        }
     }
     
     public void crearPanelEste()
-    {
+    {        
         panelEste = new JPanel(new BorderLayout());
-        panelEste.add(crearOpciones(),BorderLayout.CENTER);
-        panelEste.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
-        panelEste.setBackground(colorFondo);        
+        panelEste.setPreferredSize(new Dimension(300,100));
+        panelEste.add(crearRecorrido(),BorderLayout.CENTER);
+        panelEste.setBorder(BorderFactory.createEmptyBorder(5,5,5,10));       
         panelEste.setVisible(true);
-        panelPrincipal.add(panelEste,BorderLayout.SOUTH);        
+        panelPrincipal.add(panelEste,BorderLayout.EAST);        
     }   
+    
+    public void crearPanelSur()
+    {
+        panelSur = new JPanel(new BorderLayout());
+        panelSur.add(crearOpciones(),BorderLayout.CENTER);
+        panelSur.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));       
+        panelSur.setVisible(true);
+        panelPrincipal.add(panelSur,BorderLayout.SOUTH);        
+    } 
+    
+    public JPanel crearRecorrido()//Crea el panel para el ingreso del usuario
+    {
+        JPanel panelRecorrido = new JPanel();                     
+        panelRecorrido.setBorder(BorderFactory.createCompoundBorder( //Define el borde del panel
+                BorderFactory.createEmptyBorder(10,10,10,10),
+              BorderFactory.createTitledBorder("Recorridos")));
+        return panelRecorrido;
+    }
     
     public JPanel crearOpciones()//Crea el panel para el ingreso del usuario
     {
         JPanel panelOpciones = new JPanel();
-        JButton cargar = new JButton("Cargar Archivo");
-        JButton mostrar = new JButton("Mostrar recorrido más corto");
-        JComboBox listaPalabras = new JComboBox();
-        JComboBox listaPalabras2 = new JComboBox();
-        listaPalabras.removeAllItems();
-        listaPalabras2.removeAllItems();
-        for(int i = 1; i<=controlador.getDiccionario().longitudLista();i++)
-        {
-            String palabra = controlador.retornaPalabra(i);
-            listaPalabras.addItem(palabra);
-            listaPalabras2.addItem(palabra);
-        }        
+        cargar = new JButton("Cargar Archivo");
+        mostrar = new JButton("Mostrar recorrido más corto");
+        cargar.addActionListener(this);
+        mostrar.addActionListener(this);
+        listaPalabras = new JComboBox();
+        listaPalabras2 = new JComboBox();        
         panelOpciones.add(cargar);
         panelOpciones.add(listaPalabras);
         panelOpciones.add(listaPalabras2);
         panelOpciones.add(mostrar);        
         panelOpciones.setBorder(BorderFactory.createCompoundBorder( //Define el borde del panel
-                BorderFactory.createEmptyBorder(5,5,5,5),
+                BorderFactory.createEmptyBorder(10,10,10,10),
               BorderFactory.createTitledBorder("Opciones")));
         return panelOpciones;
     }
     
-    private void cargarActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        
-            // TODO add your handling code here:
-        if(select.showDialog(this,"Abrir archivo")==JFileChooser.APPROVE_OPTION){
-            archivo=select.getSelectedFile();
-            if (archivo.canRead()) {
-                if (archivo.getName().endsWith("txt")) {
-                    
-                    try {
-                        entrada=new FileInputStream(archivo);
-                        int ascci;
-                        while ((ascci=entrada.read())!=-1) {
-                            char caracter=(char)ascci;
-                            contenido +=caracter;
+    public void actionPerformed(ActionEvent e)//Recibe la acción al hacer click en alguno de los botones
+    { 
+        if(e.getSource() == cargar)
+        {
+            if(select.showDialog(this,"Abrir archivo")==JFileChooser.APPROVE_OPTION)
+            {
+                archivo=select.getSelectedFile();
+                if (archivo.canRead()) 
+                {
+                    if (archivo.getName().endsWith("txt")) 
+                    {
+                        try {
+                            controlador.leerArchivo(archivo);
+                            leido = true;
+                            panelGrafo.repaint();
+                            panelSur.repaint();
+                            panelEste.repaint();
+                            listaPalabras.removeAllItems();
+                            listaPalabras2.removeAllItems();
+                            for(int i = 1; i<=controlador.getDiccionario().longitudLista();i++)
+                            {
+                                String palabra = controlador.retornaPalabra(i);
+                                listaPalabras.addItem(palabra);
+                                listaPalabras2.addItem(palabra);
+                            }  
+                        
+                        } catch (IOException ex) 
+                        {
+                            Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } catch (Exception e) {
                     }
-                    
-//                    palabras.setText(contenido);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Seleccione un archivo de texto");
-                }
-            }
-            
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Seleccione un archivo de texto");
+                    }
+                }    
+            }        
         }
     }
-        
 }
 

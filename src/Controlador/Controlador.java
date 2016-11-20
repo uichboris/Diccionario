@@ -2,6 +2,7 @@ package Controlador;
 
 import java.io.IOException;
 import Modelo.*;
+import java.io.File;
 
 public class Controlador 
 {
@@ -12,8 +13,12 @@ public class Controlador
     
     public Controlador() throws IOException
     {
-        admArch = new AdministradorArchivos();
-        diccionario = admArch.leerArchivo();        
+        admArch = new AdministradorArchivos();       
+    }
+    
+    public void leerArchivo(File archivo) throws IOException
+    {
+        diccionario = admArch.leerArchivo(archivo);   
     }
     
     public void crearMatrizPosicionesGrafo()
