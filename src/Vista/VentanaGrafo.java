@@ -11,11 +11,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -24,23 +29,27 @@ public class VentanaGrafo extends JFrame
     Controlador controlador;
     PanelGrafo panelGrafo;
     Color colorFondo;
+    JPanel panelEste;
     JPanel panelPrincipal = new JPanel(new BorderLayout());
-    ArrayList <JLabel> palabras = new ArrayList();
     
     public VentanaGrafo() throws IOException
     {
         super("Grafo");
+        controlador = new Controlador();
         panelGrafo = new PanelGrafo(); 
-        panelPrincipal.add(panelGrafo,BorderLayout.CENTER);
+        //panelPrincipal.add(panelGrafo,BorderLayout.CENTER);
+        JScrollPane scrollPane = new  JScrollPane(panelGrafo);
+        panelPrincipal.add(scrollPane);
         colorFondo = Color.BLUE;       
         panelPrincipal.setBackground(colorFondo);
-        controlador = new Controlador();
+        crearPanelEste();
+        pack();         
         controlador.crearMatriz();
         setContentPane(panelPrincipal);  
         panelGrafo.repaint();
         Dimension tamaño = getSize();
-        tamaño.height = 540;
-        tamaño.width = 800;
+        tamaño.height = 740;
+        tamaño.width = 1200;
         setSize(tamaño);
         addWindowListener(new WindowAdapter()
         {
@@ -92,7 +101,6 @@ public class VentanaGrafo extends JFrame
                             }
                         }
                     VentanaGrafo ventanaGrafo = new VentanaGrafo();
-                   //mcg.pack();
                     ventanaGrafo.setLocationRelativeTo(null);
                     ventanaGrafo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     ventanaGrafo.setResizable(false);
@@ -111,15 +119,15 @@ public class VentanaGrafo extends JFrame
         int ejeX,ejeY;  
         boolean primera = false;
 
-        @Override
-        public void setLayout(LayoutManager mgr) {
-            super.setLayout(null); //To change body of generated methods, choose Tools | Templates.
-        }
-
         public PanelGrafo()
         {
-            setPreferredSize(new Dimension(450,495));
+            //setPreferredSize(new Dimension(450,495));            
         }
+        
+        @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(3000, 3000);
+    }
         
         @Override        
         public void paintComponent(Graphics g)
@@ -141,11 +149,22 @@ public class VentanaGrafo extends JFrame
             i  = 1;
             do
             {
-                int n1 = n+ultimaPosicionX, n2 = n;
+                int n1 = n+ultimaPosicionX, n2 = n+ultimaPosicionY;
                 ultimaPosicionX = n1;
                 ultimaPosicionY = n2;
                 if(matrizPosiciones[i-1][0]==0)
                 {
+                    if(n2>740)
+                    {
+                        n2 = 50;
+                    }
+                    else
+                    {
+                        if(n1>1200)
+                        {
+                            n1 = 50;
+                        }
+                    }
                     g.setColor(Color.red);
                     g.fillRect(n1, n2, 10, 10);
                     g.setColor(Color.BLACK);
@@ -159,13 +178,14 @@ public class VentanaGrafo extends JFrame
                     Tripleta t = (Tripleta)p.retornaDato();
                     if(t.retornaFila()==i)
                     {
-                        int posX = matrizPosiciones[i-1][0]+50;
+                        int posX = matrizPosiciones[i-1][0]+100;
                         int posY = matrizPosiciones[i-1][1];
                         for(int j =0; j<longitud; j++)
                         {
-                            if(posX==matrizPosiciones[j][0] && posY==matrizPosiciones[j][1])
+                            if((posX==matrizPosiciones[j][0] && posY==matrizPosiciones[j][1])||(posX-matrizPosiciones[j][0]<50 && posY-matrizPosiciones[j][1]<50))
                             {
-                                posY = posY+50;
+                                posY = posY+50+(t.retornaColumna()*5);
+                                posX = posX-25;
                             }
                         }
                         if(matrizPosiciones[t.retornaColumna()-1][0]==0)
@@ -179,6 +199,10 @@ public class VentanaGrafo extends JFrame
                             g.setColor(Color.BLACK);
                             g.drawLine(matrizPosiciones[i-1][0]+5, matrizPosiciones[i-1][1]+5, posX+5, posY+5);
                         }
+                        else
+                        {
+                            g.drawLine(matrizPosiciones[i-1][0]+5, matrizPosiciones[i-1][1]+5, matrizPosiciones[t.retornaColumna()-1][0]+5, matrizPosiciones[t.retornaColumna()-1][1]+5);
+                        }
                         ultimaPosicionX = posX;
                         ultimaPosicionY = posY;
                     }
@@ -186,41 +210,42 @@ public class VentanaGrafo extends JFrame
                 }                
                 i = i+1;
             }while(i<=controlador.getDiccionario().longitudLista());
-//            g.drawImage(imagenes.get(DatosDelJuego.Ambiente),125,36,this);
-//            g.drawImage(imagenes.get(DatosDelJuego.ImagenTablero),125,65,this);
-//            if(estado == DatosDelJuego.MOVIMIENTO)
-//            {
-//                int p = controlador.getPersonaje().getValor();
-//                g.drawImage(imagenes.get(p),ejeX,ejeY,this);
-//                estado = DatosDelJuego.MOVIMIENTO_DETENIDO;
-//                for(int i = 0;i<12; i++) 
-//                {
-//                    for(int j = 0;j<10; j++)
-//                    {
-//                        int ejeXElemento = controlador.getTablero().getElemento(i, j).getCoordenada_x();
-//                        int ejeYElemento = controlador.getTablero().getElemento(i, j).getCoordenada_y();
-//                        g.drawImage(imagenes.get(controlador.getTablero().getElemento(i, j).getValor()),ejeXElemento,ejeYElemento,this);                    
-//                    }
-//                } 
-//            }
-//            else if(primera==false)
-//            {
-//                int p = controlador.getPersonaje().getValor();
-//                ejeX = controlador.getPersonaje().getEjeX();
-//                ejeY = controlador.getPersonaje().getEjeY();
-//                g.drawImage(imagenes.get(p),ejeX,ejeY,this);
-//                for(int i = 0;i<12; i++) 
-//                {
-//                    for(int j = 0;j<10; j++)
-//                    {
-//                        controlador.definePosicionElementos(i, j, ejeX, ejeY);
-//                        int ejeXElemento = controlador.getTablero().getElemento(i, j).getCoordenada_x();
-//                        int ejeYElemento = controlador.getTablero().getElemento(i, j).getCoordenada_y();
-//                        g.drawImage(imagenes.get(controlador.getTablero().getElemento(i, j).getValor()),ejeXElemento,ejeYElemento,this);                    
-//                    }
-//                }               
-//            }
         }
+    }
+    
+    public void crearPanelEste()
+    {
+        panelEste = new JPanel(new BorderLayout());
+        panelEste.add(crearOpciones(),BorderLayout.CENTER);
+        panelEste.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
+        panelEste.setBackground(colorFondo);        
+        panelEste.setVisible(true);
+        panelPrincipal.add(panelEste,BorderLayout.SOUTH);        
+    }   
+    
+    public JPanel crearOpciones()//Crea el panel para el ingreso del usuario
+    {
+        JPanel panelOpciones = new JPanel();
+        JButton cargar = new JButton("Cargar Archivo");
+        JButton mostrar = new JButton("Mostrar recorrido más corto");
+        JComboBox listaPalabras = new JComboBox();
+        JComboBox listaPalabras2 = new JComboBox();
+        listaPalabras.removeAllItems();
+        listaPalabras2.removeAllItems();
+        for(int i = 1; i<=controlador.getDiccionario().longitudLista();i++)
+        {
+            String palabra = controlador.retornaPalabra(i);
+            listaPalabras.addItem(palabra);
+            listaPalabras2.addItem(palabra);
+        }        
+        panelOpciones.add(cargar);
+        panelOpciones.add(listaPalabras);
+        panelOpciones.add(listaPalabras2);
+        panelOpciones.add(mostrar);        
+        panelOpciones.setBorder(BorderFactory.createCompoundBorder( //Define el borde del panel
+                BorderFactory.createEmptyBorder(5,5,5,5),
+              BorderFactory.createTitledBorder("Opciones")));
+        return panelOpciones;
     }
         
 }

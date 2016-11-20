@@ -13,8 +13,22 @@ public class Controlador
     public Controlador() throws IOException
     {
         admArch = new AdministradorArchivos();
-        diccionario = admArch.leerArchivo();
+        diccionario = admArch.leerArchivo();        
     }
+    
+    public void crearMatrizPosicionesGrafo()
+    {
+        int i;
+        int longitud = diccionario.longitudLista();
+        int[][] matrizPosiciones = new int[longitud][2];
+        for(i=0; i<longitud;i++)
+        {
+            for(int j=0; j<2;j++)
+            {
+                matrizPosiciones[i][j] = 0;
+            } 
+        } 
+    }   
     
     public String retornaPalabra(int posicion)
     {
@@ -266,7 +280,7 @@ public class Controlador
            } 
         }
     }
-
+    
     public ListaDoblementeLigada getDiccionario() {
         return diccionario;
     }
