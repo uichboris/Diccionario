@@ -9,17 +9,19 @@ public class Controlador
     
     private final AdministradorArchivos admArch;
     private ListaDoblementeLigada diccionario;
+    private ListaDoblementeLigada dialogos;
     private MatrizEnForma2 matrizAdyGrafo;
     private Contador contador;
     
-    public Controlador()
+    public Controlador() throws IOException
     {
-        admArch = new AdministradorArchivos();       
+        admArch = new AdministradorArchivos();
+        dialogos = admArch.leerDialogos();
     }
     
     public void leerArchivo(File archivo) throws IOException
     {
-        diccionario = admArch.leerArchivo(archivo);   
+        diccionario = admArch.leerArchivo(archivo);        
     }
     
     public String retornaPalabra(int posicion)
@@ -81,6 +83,12 @@ public class Controlador
             p = p.retornaLd();
         }       
     }
+    
+    public ListaDoblementeLigada getDialogos()
+    {
+        return dialogos;
+    }
+    
     public ListaDoblementeLigada getDiccionario() 
     {
         return diccionario;

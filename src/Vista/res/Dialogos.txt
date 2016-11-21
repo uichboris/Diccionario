@@ -1,0 +1,22 @@
+Hola, esta debe ser tu primera vez con el programa.
+¡Oye!, espera a que termine de hablar antes de presionar algo.
+Seguro lo terminas dañando o algo así.
+Bueno, ¿En que estaba?
+¡Ah sí!
+Bueno, estoy aqui para ayudarte.
+Este es un programa que dibuja grafos con un diccionario dado.
+Solo tienes que cargar un archivo en aquel boton que dice
+cargar archivo, seleccionas un .txt y el programa hace el resto.
+Cuando te muestre el grafo, puedes seleccionar palabras
+Selecciona 2 para ver cual es el menor recorrido entre ambas.
+Tambien te mostrara a que palabras puedes ir desde la
+palabra seleccionada.
+Eso es todo por ahora, intentare darte ayuda si veo
+que la necesitas.
+Disfruta el programa
+Espera, espera, debes cargar el archivo antes.
+Ahora puedes seleccionar 2 palabras y ver el recorrido.
+Has seleccionado
+Esta bien...
+Creo que la idea es seleccionar 2 palabras distintas.
+Puedes ver el recorrido sobre mi.

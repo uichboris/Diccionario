@@ -2,7 +2,6 @@ package Modelo;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -30,7 +29,25 @@ public class AdministradorArchivos
             diccionario.insertar(palabra, p);
             p = p.retornaLd();
         }
-        p = diccionario.primerNodo();
         return diccionario;        
+    }
+    
+    public ListaDoblementeLigada leerDialogos() throws IOException
+    {
+        File archivo = new File("src/Vista/res/Dialogos.txt");
+        fr = new FileReader(archivo);
+        br = new BufferedReader(fr);
+        String cadena = br.readLine();
+        System.out.println(cadena);
+        ListaDoblementeLigada dialogos = new ListaDoblementeLigada();
+        dialogos.insertar(cadena, null);
+        NodoDoble p = dialogos.primerNodo();
+        while ((cadena = br.readLine())!=null) 
+        {
+            dialogos.insertar(cadena, p);
+            System.out.println(cadena);
+            p = p.retornaLd();
+        }
+        return dialogos;        
     }
 }

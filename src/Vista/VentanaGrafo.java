@@ -31,12 +31,21 @@ public class VentanaGrafo extends JFrame implements ActionListener
     private BufferedImage image;
     private int estado;
     private int contador;
+    private String mensaje;
+    private String palabra;
+    private String palabra2;
+    private int dialogo;
     
-    public VentanaGrafo()
+    public VentanaGrafo() throws IOException
     {        
-        super("Grafos 1.0");        
+        super("Grafos 1.0"); 
+        dialogo = 0;
+        mensaje = "";
         leido = false;
+        estado = 0;
         contador = 0;
+        palabra = "";
+        palabra2 = "";
         controlador = new Controlador();
         panelGrafo = new PanelGrafo(); 
         JScrollPane scrollPane = new  JScrollPane(panelGrafo);
@@ -51,8 +60,8 @@ public class VentanaGrafo extends JFrame implements ActionListener
         tamaño.height = 700;
         tamaño.width = 1200;
         setSize(tamaño);
-        controlador.iniciarContador(50);
-        play();
+        controlador.iniciarContador(8000);
+        Iniciar();
         addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -62,14 +71,66 @@ public class VentanaGrafo extends JFrame implements ActionListener
         });
     }
     
-    public void play()
+    public void Iniciar()
     {
         Thread t = new Thread()
         {
             public void run()
             {
                 while(true)
-                {           
+                {
+                    if(estado==0)
+                    {
+                        int cambio = 8;
+                        try 
+                        {                                
+                            image = ImageIO.read(getClass().getClassLoader().getResource("Vista/res/images/personaje"+cambio+".png"));
+                        } catch (IOException ex) 
+                        {
+                            Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        mensaje = (String)controlador.getDialogos().retornaValorEn(1);                        
+                        panelPersonaje.repaint();
+                        int completo = 0;
+                        int dialogo = 6;     
+                        if(controlador.getContador().getTiempo()<=0)
+                        {
+                            while(completo==0)
+                            {
+                                mensaje = (String)controlador.getDialogos().retornaValorEn(dialogo);                                                      
+                                try 
+                                {
+                                    image = ImageIO.read(getClass().getClassLoader().getResource("Vista/res/images/personaje"+cambio+".png"));
+                                } catch (IOException ex) 
+                                {
+                                    Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                panelPersonaje.repaint();
+                                if(controlador.getContador().getTiempo()<=0)
+                                {
+                                    dialogo = dialogo+1;
+                                    if(cambio>11) 
+                                    {
+                                        cambio=8;
+                                    }
+                                    else
+                                    {
+                                        cambio = cambio+1;
+                                    }
+                                    controlador.reiniciarContador();
+                                    controlador.iniciarContador(8000);
+                                    if(dialogo>16)
+                                    {
+                                        completo = 1;
+                                    }
+                                }
+                            }
+                            controlador.reiniciarContador();
+                            controlador.iniciarContador(50);
+                            estado = 1;
+                            mensaje = "";
+                        }
+                    }
                     if(estado==1)
                     {
                         while(contador<=3)
@@ -91,9 +152,127 @@ public class VentanaGrafo extends JFrame implements ActionListener
                         } 
                         contador = 0;
                     }
+                    if(estado==2)
+                    {
+                        controlador.reiniciarContador();
+                        controlador.iniciarContador(6000);
+                        mensaje = (String)controlador.getDialogos().retornaValorEn(17);                                                                          
+                        try 
+                        {
+                            image = ImageIO.read(getClass().getClassLoader().getResource("Vista/res/images/personaje"+6+".png"));
+                        } catch (IOException ex) 
+                        {
+                            Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        panelPersonaje.repaint();
+                        int completo = 0;
+                        while(completo==0)
+                        {
+                            if(controlador.getContador().getTiempo()<=0)
+                            {
+                                completo = 1;
+                            }
+                        }
+                        controlador.reiniciarContador();
+                        controlador.iniciarContador(50);
+                        estado = 1;
+                        mensaje = "";
+                    }
                     if(estado==3)
                     {
-                        return;                        
+                        controlador.reiniciarContador();
+                        controlador.iniciarContador(6000);
+                        mensaje = (String)controlador.getDialogos().retornaValorEn(18);                                                                          
+                        try 
+                        {
+                            image = ImageIO.read(getClass().getClassLoader().getResource("Vista/res/images/personaje"+6+".png"));
+                        } catch (IOException ex) 
+                        {
+                            Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        panelPersonaje.repaint();
+                        int completo = 0;
+                        while(completo==0)
+                        {
+                            if(controlador.getContador().getTiempo()<=0)
+                            {
+                                completo = 1;
+                            }
+                        }
+                        controlador.reiniciarContador();
+                        controlador.iniciarContador(50);
+                        estado = 1;
+                        mensaje = "";
+                    }
+                    if(estado==4)
+                    {
+                        controlador.reiniciarContador();
+                        controlador.iniciarContador(6000);
+                        try 
+                        {                                
+                            image = ImageIO.read(getClass().getClassLoader().getResource("Vista/res/images/personaje"+5+".png"));
+                        } catch (IOException ex) 
+                        {
+                            Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        mensaje = (String)controlador.getDialogos().retornaValorEn(19)+" "+palabra+" y "+palabra2;                        
+                        panelPersonaje.repaint();
+                        int completo = 0;
+                        int dialogo;
+                        if(palabra.equals(palabra2))
+                        {
+                            while(completo==0)
+                            {
+                                dialogo = 19;    
+                                if(controlador.getContador().getTiempo()<=0)
+                                {
+                                    while(completo==0)
+                                    {
+                                        mensaje = (String)controlador.getDialogos().retornaValorEn(dialogo);                                                      
+                                        panelPersonaje.repaint();
+                                        if(controlador.getContador().getTiempo()<=0)
+                                        {
+                                            dialogo = dialogo+1;
+                                            controlador.reiniciarContador();
+                                            controlador.iniciarContador(8000);
+                                            if(dialogo>21)
+                                            {
+                                                completo = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            while(completo==0)
+                            {
+                                dialogo = 21;
+                                if(controlador.getContador().getTiempo()<=0)
+                                {
+                                    while(completo==0)
+                                    {
+                                        mensaje = (String)controlador.getDialogos().retornaValorEn(dialogo);                                                      
+                                        panelPersonaje.repaint();
+                                        if(controlador.getContador().getTiempo()<=0)
+                                        {
+                                            dialogo = dialogo+1;
+                                            controlador.reiniciarContador();
+                                            controlador.iniciarContador(8000);
+                                            if(dialogo>22) 
+                                            {                                            
+                                                completo = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }                            
+                        }
+                        controlador.reiniciarContador();
+                        controlador.iniciarContador(50);
+                        estado = 1;
+                        mensaje = "";
                     }
                     try
                     {                        
@@ -274,7 +453,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
         {
             super.paintComponent(g);
             g.drawImage(image, 10, 50, null);
-            estado = 1;
+            g.drawString(mensaje, 50, 80);
         }
     }
     
@@ -359,6 +538,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
                         {
                             Logger.getLogger(VentanaGrafo.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        estado = 3;
                     }
                     else
                     {
@@ -373,12 +553,14 @@ public class VentanaGrafo extends JFrame implements ActionListener
             {
                 if(leido)
                 {
-                    String palabra = (String)listaPalabras.getSelectedItem();
+                    palabra = (String)listaPalabras.getSelectedItem();
+                    palabra2 = (String)listaPalabras2.getSelectedItem();
+                    estado = 4;
                     recorrido.setText("Desde la palabra "+palabra+", se puede llegar a: ");
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Debes cargar un archivo antes.");
+                    estado = 2;
                 }
             }
         }

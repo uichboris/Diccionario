@@ -162,4 +162,18 @@ public class ListaDoblementeLigada
         }
         desconectar(x);
     }
+    
+    public Object retornaValorEn(int i)
+    {        
+        NodoDoble p = primerNodo();
+        Object valor = null;
+        int n = 1;
+        while(p!=null && n<=i)
+        {
+            valor = p.retornaDato();
+            p = p.retornaLd();
+            n = n+1;
+        }
+        return valor;
+    }
 }
