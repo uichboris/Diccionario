@@ -92,7 +92,6 @@ public class MatrizEnForma2
     
     public void conectaPorColumnas(NodoDoble x)
     {
-        //int i;
         Tripleta tx = (Tripleta)x.retornaDato();
         NodoDoble p = nodoCabeza();
         NodoDoble anterior = p;

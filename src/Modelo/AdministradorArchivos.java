@@ -11,10 +11,7 @@ public class AdministradorArchivos
     private FileReader fr;
     private BufferedReader br;
     
-    public AdministradorArchivos() throws FileNotFoundException, IOException
-    {
-        
-    }
+    public AdministradorArchivos(){}
     
     public ListaDoblementeLigada leerArchivo(File archivo) throws IOException
     {
