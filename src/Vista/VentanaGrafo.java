@@ -26,6 +26,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
     private JComboBox listaPalabras2;    
     private final JPanel panelPrincipal = new JPanel(new BorderLayout());
     private boolean leido;
+    private boolean termina;
     private final JFileChooser select= new JFileChooser();
     private File archivo;
     private BufferedImage image;
@@ -42,6 +43,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
         dialogo = 0;
         mensaje = "";
         leido = false;
+        termina = false;
         estado = 0;
         contador = 0;
         palabra = "";
@@ -125,6 +127,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
                                     }
                                 }
                             }
+                            termina = true;
                             controlador.reiniciarContador();
                             controlador.iniciarContador(50);
                             estado = 1;
@@ -512,6 +515,12 @@ public class VentanaGrafo extends JFrame implements ActionListener
     { 
         if(e.getSource() == cargar)
         {
+            if(termina==false)
+            {
+                JOptionPane.showMessageDialog(null, "¡Por lo menos deja que termine de hablar!");
+            }
+            else
+            {
             if(select.showDialog(this,"Abrir archivo")==JFileChooser.APPROVE_OPTION)
             {
                 archivo=select.getSelectedFile();
@@ -545,22 +554,30 @@ public class VentanaGrafo extends JFrame implements ActionListener
                         JOptionPane.showMessageDialog(null, "Seleccione un archivo de texto");
                     }
                 }    
-            }        
+            }  
+            }
         }
         else
         {
             if(e.getSource()==mostrar)
             {
-                if(leido)
+                if(termina==false)
                 {
-                    palabra = (String)listaPalabras.getSelectedItem();
-                    palabra2 = (String)listaPalabras2.getSelectedItem();
-                    estado = 4;
-                    recorrido.setText("Desde la palabra "+palabra+", se puede llegar a: ");
+                    JOptionPane.showMessageDialog(null, "¡Por lo menos deja que termine de hablar!");
                 }
                 else
                 {
-                    estado = 2;
+                    if(leido)
+                    {
+                        palabra = (String)listaPalabras.getSelectedItem();
+                        palabra2 = (String)listaPalabras2.getSelectedItem();
+                        estado = 4;
+                        recorrido.setText("Desde la palabra "+palabra+", se puede llegar a: ");
+                    }
+                    else
+                    {
+                        estado = 2;
+                    }
                 }
             }
         }
