@@ -140,7 +140,7 @@ public class Controlador {
     }
 
     /**
-     * Crea una matriz con los costos que 
+     * Crea una matriz con los costos que da ir de un nodo a otro
      */
     public void crearCostos() {
         NodoDoble p;
@@ -156,6 +156,9 @@ public class Controlador {
         }
     }
 
+    /**
+     * Crea una matriz con los costos minímos que es de ir de un nodo a otro
+     */
     public void crearCostosMinimos() {
         int i, j, n;
         n = costos.length;
@@ -170,6 +173,13 @@ public class Controlador {
         rellenarCostosMinimos(1, 1, 0, 1);
     }
 
+    /**
+     * Rellena la matriz de costos minímos
+     * @param i es la posición i en la matriz costos
+     * @param j es la posición j en la matriz costos
+     * @param aux es una posicion auxiliar para recorrer el cierre transitivo
+     * @param aux2  es una posicion auciliar para recorrer el cierre transitivo
+     */
     public void rellenarCostosMinimos(int i, int j, int aux, int aux2) {
         int n = costos.length;
         while (i < n) {
@@ -194,6 +204,14 @@ public class Controlador {
     }
 
 
+    /**
+     * Con nodos dados, este método devuelve cual es el menor recorrido
+     * para ir desde i hasta j
+     * @param i es el nodo desde el cual se iniciará el recorrido
+     * @param j es el nodo hacia cual llega el recorrido
+     * @return recorridos que es de tipo string y contiene el recorrido más 
+     * corto para ser impreso en pantalla
+     */
     public String proceseRutas(int i, int j) 
     {
         String recorrido;
@@ -210,6 +228,13 @@ public class Controlador {
         return recorrido;
     }
 
+    /**
+     * Recorre la matriz de recorridos buscando el menor recorrido para ir
+     * desde el nodo i hasta j
+     * @param i nodo desde el cual inicia recorrido
+     * @param j nodo en el cual termina el recorrido
+     * @return ruta que es de tipo String y contiene la ruta más corta.
+     */
     public String recorra(int i, int j) {
         int k;
         ListaDoblementeLigada aux = new ListaDoblementeLigada();
@@ -237,6 +262,10 @@ public class Controlador {
         return ruta;
     }
 
+    /**
+     * Crea una matriz con todas las posibilidades a las cuales se puede ir 
+     * desde cualquier nodo i, hasta cualquier nodo j
+     */
     public void cierreTransitivo() {
         NodoDoble p;
         int i, j, k, n;
@@ -259,15 +288,5 @@ public class Controlador {
             }
         }
     }
-
-    public void recorreCierreTransitivo() {
-        cierreTransitivo();
-        int l = adyaMas.length;
-        System.out.println("Cierre transitivo: ");
-        for (int i = 1; i < l; i++) {
-            for (int j = 1; j < l; j++) {
-                System.out.println("Fila: " + i + " Columna: " + j + " Dato: " + adyaMas[i][j]);
-            }
-        }
-    }
+   
 }

@@ -12,6 +12,16 @@ public class AdministradorArchivos
     
     public AdministradorArchivos(){}
     
+    /**
+     * Lee un archivo dado por el usuario, construyendo hileras con cada una de 
+     * las palabras. Las hileras son guardadas en una lista doblemente ligada
+     * para no hacer uso de la lectura del archivo de nuevo.
+     * @param archivo es el archivo cargado por el usuario en la vista, es de 
+     * tipo File
+     * @return diccionario que es de tipo listadoblementeligada contine
+     * todas las hileras de las palbras
+     * @throws IOException en caso de que el archivo no haya sido encontrado
+     */
     public ListaDoblementeLigada leerArchivo(File archivo) throws IOException
     {
         fr = new FileReader(archivo);
@@ -32,6 +42,13 @@ public class AdministradorArchivos
         return diccionario;        
     }
     
+    /**
+     * Lee el archivo dialogos, un archivo creado especialmente para la ayuda.
+     * Guarda cada una de las frases como String en una lista doblemente ligada.
+     * @return dialogos que es tipo listadoblementeligada y contiene todos
+     * los dialogos dichos por el personaje de ayuda.
+     * @throws IOException 
+     */
     public ListaDoblementeLigada leerDialogos() throws IOException
     {
         File archivo = new File("src/Vista/res/Dialogos.txt");

@@ -35,8 +35,13 @@ public class VentanaGrafo extends JFrame implements ActionListener
     private String mensaje;
     private String palabra;
     private String palabra2;
-    private int dialogo;
+    private final int dialogo;
     
+    /**
+     * Constructor de la ventana inicializa todo lo referente a la vista, 
+     * botones, paneles, tamaño, etc.
+     * @throws IOException 
+     */
     public VentanaGrafo() throws IOException
     {        
         super("Grafos 1.0"); 
@@ -72,6 +77,11 @@ public class VentanaGrafo extends JFrame implements ActionListener
         });
     }
     
+    
+    /**
+     * Método que inicia t que es de tipo Thread, es un hilo el cual controla
+     * las animaciones y los dialogos del personaje de ayuda.
+     */
     public void Iniciar()
     {
         Thread t = new Thread()
@@ -304,7 +314,12 @@ public class VentanaGrafo extends JFrame implements ActionListener
         };
         t.start();
     }
-    
+  
+    /**
+     * Es un método que llama una ventana para la salida del programa. La 
+     * ventana permite confirma la salida del prrograma o cancelar el proceso 
+     * de cierre
+     */
     public void salir()
     {
         int opcion = JOptionPane.showConfirmDialog(null,"¿Seguro desea salir?", 
@@ -316,6 +331,10 @@ public class VentanaGrafo extends JFrame implements ActionListener
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
+    /**
+     * Método main, donde comienza la ejecución del programa.
+     * @param args 
+     */
     public static void main(String[] args) 
     {
         SwingUtilities.invokeLater(new Runnable(){
@@ -361,22 +380,43 @@ public class VentanaGrafo extends JFrame implements ActionListener
     
   
     
+    /**
+     * Clase PanelGrafo que sirve para crear el panel donde se dibujará el grafo
+     * con las palabras.
+     */
     public class PanelGrafo extends JPanel
     {   
         int ejeX,ejeY;  
         boolean primera = false;
 
+        /**
+         * Constructor del panel del grafo
+         */
         public PanelGrafo()
         {
             this.setBackground(Color.WHITE);
         }
         
+        /**
+         * Da una tamaño grande al panel del grafo, para permitir el scroll
+         * por el mismo en caso de que el grafo sea demasiado grande.
+         * @return 
+         */
         @Override
         public Dimension getPreferredSize() 
         {
             return new Dimension(10000, 10000);
         }
         
+        /**
+         * Hace todo el proceso de dibujado del grafo. Las palabras las obtiene
+         * del atributo diccionario del controlador y las aristas de la matriz
+         * de adayacencia en forma 2 que se ha creado en el controlador. En este
+         * punto crea una matriz de 2 posiciones que guarda la posicion en la 
+         * que queda cada nodo. Esto para verificar que ningún nodo quede sobre 
+         * otro.
+         * @param g 
+         */
         @Override        
         public void paintComponent(Graphics g)
         {
@@ -454,8 +494,15 @@ public class VentanaGrafo extends JFrame implements ActionListener
         }
     }
     
+    
+    /**
+     * Clase PanelPersonaje, srive para crear el panel del personaje de ayuda.
+     */
     public class PanelPersonaje extends JPanel
     {   
+        /**
+         * Constructor de la clase que inicializa todas sus propiedades
+         */
         public PanelPersonaje()
         {
             setPreferredSize(new Dimension(400,120));
@@ -466,6 +513,12 @@ public class VentanaGrafo extends JFrame implements ActionListener
                 BorderFactory.createTitledBorder("Ayuda")));
         }
         
+        /**
+         * Dibuja el personaje y su dialogo según el estado en el que se 
+         * encuentre el hilo y según en que momento de la animación se 
+         * encuentre.
+         * @param g 
+         */
         @Override        
         public void paintComponent(Graphics g)
         {
@@ -475,6 +528,9 @@ public class VentanaGrafo extends JFrame implements ActionListener
         }
     }
     
+    /**
+     * Crea el panel este en donde se muestran los recorridos del grafo
+     */
     public void crearPanelEste()
     {        
         panelEste = new JPanel(new BorderLayout());
@@ -487,6 +543,9 @@ public class VentanaGrafo extends JFrame implements ActionListener
         panelPrincipal.add(panelEste,BorderLayout.EAST);        
     }   
     
+    /**
+     * Crea el pnale sur, en el cual se muestran las opciones del programa
+     */
     public void crearPanelSur()
     {
         panelSur = new JPanel(new BorderLayout());        
@@ -496,6 +555,11 @@ public class VentanaGrafo extends JFrame implements ActionListener
         panelPrincipal.add(panelSur,BorderLayout.SOUTH);        
     } 
     
+    /**
+     * Crea el panel detallado de los recorridos, el cual se agrega al panel
+     * este
+     * @return panelRecorrido que es de tipo JPanel
+     */
     public JPanel crearRecorrido()//Crea el panel para el ingreso del usuario
     {
         recorrido = new JLabel();
@@ -507,6 +571,11 @@ public class VentanaGrafo extends JFrame implements ActionListener
         return panelRecorrido;
     }
     
+    /**
+     * Crea el panel detallado, con los botones y Combo Box necesarios para
+     * las diferentes acciones.
+     * @return panelOpciones que es de tipo JPanel
+     */
     public JPanel crearOpciones()//Crea el panel para el ingreso del usuario
     {
         JPanel panelOpciones = new JPanel();
@@ -526,6 +595,10 @@ public class VentanaGrafo extends JFrame implements ActionListener
         return panelOpciones;
     }
     
+    /**
+     * Método que recibe toda las acciones dadas sobre los botones
+     * @param e es el evento realizado en el momento
+     */
     public void actionPerformed(ActionEvent e)//Recibe la acción al hacer click en alguno de los botones
     { 
         if(e.getSource() == cargar)

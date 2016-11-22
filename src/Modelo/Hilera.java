@@ -4,6 +4,10 @@ public class Hilera extends ListaDoblementeLigada
 {      
     public Hilera(){}//Constructor de la clase Hilera
     
+    /**
+     * Construye la hilera con un String dado
+     * @param hilera es de tipo String, es una palabra cualquiera
+     */
     public void construirHilera(String hilera)
     {
         char letra;
@@ -18,7 +22,12 @@ public class Hilera extends ListaDoblementeLigada
         }
     }
     
-    public int longitud() //Retorna la longitud de la hilera
+    /**
+     * Devuelve la longitud de la hilera
+     * @return i que es de tipo Int y contiene el valor de la longitud de la
+     * hilera
+     */
+    public int longitud() 
     {
         NodoDoble p;
         p = primerNodo();
@@ -31,34 +40,11 @@ public class Hilera extends ListaDoblementeLigada
         return i;
     }
     
-
-    public NodoDoble posicion(Hilera s)//Devuelve el nodo en el cuál comience la hilera que se ingresa como parámetro, dentro de otra hilera
-    {
-        NodoDoble p, pp, q;
-        p = primerNodo();
-        pp = p;
-        q = s.primerNodo();
-        while(!finDeRecorrido(p) && !s.finDeRecorrido(q))
-        {
-            if(p.retornaDato()==q.retornaDato())
-            {
-                p = p.retornaLd();
-                q = q.retornaLd();
-                if(s.finDeRecorrido(q))
-                {
-                    return pp;
-                }
-            }
-            else
-            {
-                pp = pp.retornaLd();
-                p = pp;
-                q = s.primerNodo();
-            }
-        }
-        return null;        
-    }
-    
+    /**
+     * Método que devuelve una hilera formada como un string nuevamente
+     * @return palabra que es de tipo String, contiene la hilera concatenada 
+     * como un String.
+     */
     public String devuelvePalabraString()
     {
         String palabra;
@@ -76,6 +62,14 @@ public class Hilera extends ListaDoblementeLigada
         return palabra;
     }
     
+    /**
+     * Compara 2 hileras diferentes y devuelve cuantas letras distintas hay 
+     * entre ambas
+     * @param b que es de tipo Hilera, es la hilera con la cual se compara
+     * la hilera que invoca el método
+     * @return n que es de tipo Int y contiene la cantidad de letras diferentes
+     * entre ambas hileras.
+     */
     public int cantidadLetrasDiferentes(Hilera b)
     {
         NodoDoble p, q;
