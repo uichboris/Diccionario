@@ -38,14 +38,12 @@ public class AdministradorArchivos
         fr = new FileReader(archivo);
         br = new BufferedReader(fr);
         String cadena = br.readLine();
-        System.out.println(cadena);
         ListaDoblementeLigada dialogos = new ListaDoblementeLigada();
         dialogos.insertar(cadena, null);
         NodoDoble p = dialogos.primerNodo();
         while ((cadena = br.readLine())!=null) 
         {
             dialogos.insertar(cadena, p);
-            System.out.println(cadena);
             p = p.retornaLd();
         }
         return dialogos;        

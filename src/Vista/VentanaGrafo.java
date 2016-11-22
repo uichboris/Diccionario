@@ -44,7 +44,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
         mensaje = "";
         leido = false;
         termina = false;
-        estado = 0;
+        estado = -1;
         contador = 0;
         palabra = "";
         palabra2 = "";
@@ -61,8 +61,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
         Dimension tamaño = getSize();
         tamaño.height = 700;
         tamaño.width = 1200;
-        setSize(tamaño);
-        controlador.iniciarContador(8000);
+        setSize(tamaño);        
         Iniciar();
         addWindowListener(new WindowAdapter()
         {
@@ -81,6 +80,22 @@ public class VentanaGrafo extends JFrame implements ActionListener
             {
                 while(true)
                 {
+                    if(estado==-1)
+                    {
+                        int opcion = JOptionPane.showConfirmDialog(null,"¿Desea ver el tutorial?", 
+                                "Grafos 1.0", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if(opcion == JOptionPane.YES_OPTION)
+                        {
+                           controlador.iniciarContador(8000);
+                           estado = 0;
+                        }            
+                        else
+                        {
+                            termina = true;
+                            controlador.iniciarContador(50);
+                            estado = 1;
+                        }
+                    }
                     if(estado==0)
                     {
                         int cambio = 8;
@@ -111,7 +126,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
                                 if(controlador.getContador().getTiempo()<=0)
                                 {
                                     dialogo = dialogo+1;
-                                    if(cambio>11) 
+                                    if(cambio>10) 
                                     {
                                         cambio=8;
                                     }
@@ -572,7 +587,7 @@ public class VentanaGrafo extends JFrame implements ActionListener
                         palabra = (String)listaPalabras.getSelectedItem();
                         palabra2 = (String)listaPalabras2.getSelectedItem();
                         estado = 4;
-                        recorrido.setText("Desde la palabra "+palabra+", se puede llegar a: ");
+                        recorrido.setText(controlador.proceseRutas(listaPalabras.getSelectedIndex()+1, listaPalabras2.getSelectedIndex()+1));
                     }
                     else
                     {
