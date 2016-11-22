@@ -14,7 +14,8 @@ public class Controlador {
     private int menoresCostos[][], rutas[][], adyaMas[][], costos[][];
 
     /**
-     * Constructor de la clase controlador que hace todos los llamados a las clases 
+     * Constructor de la clase controlador que hace todos los llamados a las 
+     * clases 
      * de modelo
      */
     public Controlador() throws IOException 
@@ -25,7 +26,8 @@ public class Controlador {
     
 /**
  * El controlador llama al método de administrador de archivos
- * @param archivo es el parametro que llega de la vista, del archivo seleccionado por el usuario
+ * @param archivo es el parametro que llega de la vista, del archivo 
+ * seleccionado por el usuario
  * @throws IOException 
  */
     public void leerArchivo(File archivo) throws IOException {
@@ -111,22 +113,35 @@ public class Controlador {
     }
 
     /**
-     * 
-     * @return 
+     * Devuelve el contador, atributo que tiene como objetivo usar un timer
+     * para las animaciones del personaje de ayuda
+     * @return el atributo contador que es de tipo Contador
      */
     public Contador getContador() {
         return contador;
     }
 
+    /**
+     * Inicializa el contador con un tiempo dado
+     * @param tiempo es un atributo de tipo entero que inicializa el timer de la 
+     * clase contador
+     */
     public void iniciarContador(int tiempo) {
         contador = new Contador(tiempo);
         contador.iniciarContador();
     }
 
+    /**
+     * Reinicia el contador, para que no se acumulen los tiempos ingresados 
+     * anteriormente
+     */
     public void reiniciarContador() {
         contador.reiniciarTimer();
     }
 
+    /**
+     * Crea una matriz con los costos que 
+     */
     public void crearCostos() {
         NodoDoble p;
         int n;
@@ -185,6 +200,10 @@ public class Controlador {
         if(i==j)
         {
             return "Las palabras son las mismas";
+        }
+        if(adyaMas[i][j]==0)
+        {
+            return "No se puede ir desde "+ retornaPalabra(i) +" hasta "+retornaPalabra(j)+".";
         }
         recorrido = "<html>Para llegar a " + retornaPalabra(j) + " desde " + retornaPalabra(i) + " la ruta es: ";
         recorrido = recorrido+"<br>"+recorra(i, j)+retornaPalabra(j)+"."+"</html>";
