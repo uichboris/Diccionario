@@ -4,6 +4,11 @@ public class MatrizEnForma2
 {
     private NodoDoble mat;
     
+    /**
+     * Constructor de la clase
+     * @param m es el número de filas que tendrá la matriz
+     * @param n es el número de columnas que tendrá la matriz
+     */
     public MatrizEnForma2(int m, int n)
     {
         Tripleta t = new Tripleta(m,n,0);
@@ -15,21 +20,38 @@ public class MatrizEnForma2
         mat.asignaLd(x);
     }
     
+    /**
+     * Retorna el nodo Matriz que contiene la cantidad de columnas y filas de
+     * la matriz
+     * @return mat que es de tipo nodoDoble
+     */
     public NodoDoble nodoMatriz()
     {
         return mat;
     }
     
+    /**
+     * Retorna el nodo cabeza
+     * la matriz
+     * @return nodoCabeza que es de tipo NodoDoble
+     */
     public NodoDoble nodoCabeza()
     {
         return mat.retornaLd();
     }
     
+    /**
+     * Retorna el primer nodo de la matriz
+     * @return primerNodo que es de tipo NodoDoble
+     */
     public NodoDoble primerNodo()
     {
         return nodoCabeza().retornaLd();        
     }
     
+    /**
+     * Recorre la matriz, ordenandola por sus filas.
+     */
     public void muestraMatrizPorFilas()
     {
         System.out.println("Matriz por filas: ");
@@ -48,6 +70,9 @@ public class MatrizEnForma2
         }
     }
     
+    /**
+     * Recorre la matriz, ordenandola por sus columnas.
+     */
     public void muestraMatrizPorColumnas()
     {
         System.out.println("Matriz por columnas: ");
@@ -66,6 +91,10 @@ public class MatrizEnForma2
         }
     }
     
+    /**
+     * Conecta la matriz por filas con su liga derecha
+     * @param x de tipo NodoDoble, es el nodo que se conectará a la matriz
+     */
     public void conectaPorFilas(NodoDoble x)
     {
         //int i;
@@ -90,6 +119,11 @@ public class MatrizEnForma2
         x.asignaLd(q);
     }
     
+    /**
+     * Conecta por columnas cada una de las columnas que pertenecen a la matriz
+     * por medio de su liga izquierda
+     * @param x de tipo NodoDoble, es el nodo que se conectará a la matriz.
+     */
     public void conectaPorColumnas(NodoDoble x)
     {
         Tripleta tx = (Tripleta)x.retornaDato();
@@ -115,6 +149,12 @@ public class MatrizEnForma2
         tmat.asignaValor((int)tmat.retornaValor()+1);
     }   
     
+    /**
+     * Retorna un nodo dados una fila y una columna
+     * @param f es de tipo Int y se refiere a la fila del nodo
+     * @param c es de tipo Int y se refiere a la columna del nodo
+     * @return p que es de tipo NodoDoble
+     */
     public NodoDoble retonarNodoEn(int f, int c)
     {
         NodoDoble p;
